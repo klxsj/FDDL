@@ -3,7 +3,6 @@ import collections
 import csv
 from queue import Queue
 
-
 class AVGFCache(object):
     def __init__(self, size, window, freq_discount):
         self.capacity = size
