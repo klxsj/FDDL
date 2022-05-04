@@ -213,7 +213,7 @@ if __name__=="__main__":
     '''init model'''
     if sys.argv[2] == 'movielens':
         # movielens
-        load_dataset_path = 'movielens25_last_1m{}_features.csv'.format(sys.argv[1])
+        load_dataset_path = 'movielens25_gateway{}.csv'.format(sys.argv[1])
     dataset = load_dataset(load_dataset_path)
 
     ENV_CONFIG['cache_size'] = int(sys.argv[3])
@@ -229,12 +229,3 @@ if __name__=="__main__":
     for key, var in local_vars.items():
         local_parameters[key] = var.clone()
     local_cache_table = (gateway.name, tuple(gateway.env.real_cache.cache.keys()))
-    # local_vars = [MSG['1'], local_parameters, local_hit_count_real, other_hit_count_real, total_train_step, local_cache_table, reward_list_in_one_update, total_traffic_offload, total_traffic, replace_count]
-
-    with open('local_training_ret_gateway{}'.format(sys.argv[1]), 'a+') as f:
-        f.write('\n Execute time: {}'.format(datetime.datetime.now()))
-        f.write('\nCache size: {}'.format(ENV_CONFIG['cache_size']))
-        f.write('\nDataset: {}'.format(sys.argv[2]))
-        f.write('\nLocal hit ratio: {}'.format(round(local_hit_count_real / total_train_step, 4)))
-        f.write('\nTotal hit ratio: {}'.format(round((local_hit_count_real + other_hit_count_real) / total_train_step, 4)))
-        f.write('\nTraffic offloading rate: {}'.format(round(total_traffic_offload / total_traffic, 4)))
